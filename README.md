@@ -13,7 +13,7 @@ Getting Started
 5. Use the api...Examples:
 
    a) http://localhost:8080/api/ElevationService/39/80
-   
+
    b) http://localhost:8080/api/TimezoneService/39/-119/1331161200
 
 Technologies Used

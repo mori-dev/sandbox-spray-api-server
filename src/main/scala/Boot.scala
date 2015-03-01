@@ -1,4 +1,4 @@
-package com.christophergagne.sprayapidemo
+package com.example.mysatusapi
 
 import akka.actor.{ActorSystem, Props}
 import akka.actor.ActorDSL._
@@ -9,7 +9,6 @@ import spray.can.Http
 
 object Boot extends App {
 
-  // we need an ActorSystem to host our application in
   implicit val system = ActorSystem("spray-api-service")
   val log = Logging(system, getClass)
 
@@ -17,13 +16,11 @@ object Boot extends App {
     become {
       case b @ Bound(connection) => log.info(b.toString)
       case cf @ CommandFailed(command) => log.error(cf.toString)
-      case all => log.debug("SprayApiDemo App Received a message from Akka.IO: " + all.toString)
+      case all => log.debug("MyStatusApi App Received a message from Akka.IO: " + all.toString)
     }
   })
 
-  // create and start our service actor
-  val service = system.actorOf(Props[SprayApiDemoServiceActor], "spray-service")
+  val service = system.actorOf(Props[MyStatusApiServiceActor], "spray-service")
 
-  // start a new HTTP server on port 8080 with our service actor as the handler
   IO(Http).tell(Http.Bind(service, "localhost", 8080), callbackActor)
 }
